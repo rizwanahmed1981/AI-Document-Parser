@@ -64,14 +64,14 @@ As a developer using the document upload API, I want to receive feedback about t
 
 - **FR-001**: System MUST provide a REST API endpoint for uploading documents via HTTP POST requests
 - **FR-002**: System MUST accept common document formats including PDF, DOCX, JPEG, PNG, TXT, and HTML
-- **FR-003**: System MUST validate uploaded files to ensure they are of supported types and meet size limitations
-- **FR-004**: System MUST authenticate API requests using standard authentication mechanisms (API keys, OAuth, or JWT tokens)
+- **FR-003**: System MUST validate uploaded files to ensure they are of supported types and meet size limitations (maximum 5MB per file)
+- **FR-004**: System MUST authenticate API requests using OAuth 2.0 for enhanced security and user delegation capabilities
 - **FR-005**: System MUST return a unique document identifier upon successful upload to track the document in the system
 - **FR-006**: System MUST store uploaded documents securely with appropriate access controls
-- **FR-007**: System MUST provide appropriate error responses when uploads fail due to invalid file types, size limits, or authentication issues
+- **FR-007**: System MUST provide appropriate error responses when uploads fail due to invalid file types, size limits, or authentication issues, including 415 Unsupported Media Type for unsupported file types
 - **FR-008**: System MUST handle large file uploads efficiently, potentially supporting chunked or resumable uploads for files exceeding typical sizes
 - **FR-009**: System MUST validate file integrity to ensure uploaded documents are not corrupted
-- **FR-010**: System MUST implement rate limiting to prevent abuse of the upload endpoint
+- **FR-010**: System MUST implement rate limiting of 10 requests per minute per IP to prevent abuse of the upload endpoint
 
 ### Key Entities *(include if feature involves data)*
 
@@ -88,3 +88,12 @@ As a developer using the document upload API, I want to receive feedback about t
 - **SC-003**: The system can handle at least 100 concurrent document uploads without performance degradation
 - **SC-004**: 99% of valid document uploads complete successfully without corruption or data loss
 - **SC-005**: Users can upload documents in at least 6 different supported file formats (PDF, DOCX, JPEG, PNG, TXT, HTML)
+
+## Clarifications
+
+### Session 2026-01-22
+- Q: Authentication Method → A: OAuth - More complex but offers better security and user delegation capabilities
+- Q: Maximum File Size Limit → A: 5MB - Conservative limit for fast processing
+- Q: Error Handling for Invalid File Types → A: 415 Unsupported Media Type - Standard HTTP status code for unsupported file types
+- Q: Rate Limiting Strategy → A: 10 requests per minute per IP - Very restrictive
+- Q: Chunked Upload Support → A: No - For initial implementation, focus on direct uploads with size limits

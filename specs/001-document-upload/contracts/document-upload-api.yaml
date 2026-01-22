@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  title: Document Upload API
+  version: 1.0.0
+  description: API for uploading documents to the document parser system
+  contact:
+    name: Document Parser Support
+    email: support@documentparser.com
+
+servers:
+  - url: https://api.documentparser.com/v1
+    description: Production server
+
+paths:
+  /documents:
+    post:
+      summary: Upload a document
+      description: Upload a document file for processing. The document will be validated and stored securely.
+      operationId: uploadDocument
+      tags:
+        - Documents
+      security:
+        - OAuth2: [write]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The document file to upload
+                metadata:
+                  type: object
+                  description: Additional metadata about the document
+                  properties:
+                    description:
+                      type: string
+                      description: Optional description of the document
+                    category:
+                      type: string
+                      description: Category for organizing documents
+      responses:
+        '201':
+          description: Document uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+        '400':
+          description: Bad request - invalid request format or missing parameters
+        '401':
+          description: Unauthorized - invalid or missing authentication
+        '403':
+          description: Forbidden - insufficient permissions
+        '413':
+          description: Payload Too Large - file exceeds maximum size (5MB)
+        '415':
+          description: Unsupported Media Type - file type not supported
+        '429':
+          description: Too Many Requests - rate limit exceeded
+        '500':
+          description: Internal server error
+
+  /documents/{documentId}:
+    get:
+      summary: Get document information
+      description: Retrieve information about a specific uploaded document
+      operationId: getDocument
+      tags:
+        - Documents
+      security:
+        - OAuth2: [read]
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the document
+      responses:
+        '200':
+          description: Document information retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentInfo'
+        '401':
+          description: Unauthorized - invalid or missing authentication
+        '403':
+          description: Forbidden - insufficient permissions
+        '404':
+          description: Document not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    DocumentResponse:
+      type: object
+      properties:
+        documentId:
+          type: string
+          description: Unique identifier for the uploaded document
+        fileName:
+          type: string
+          description: Original name of the uploaded file
+        fileType:
+          type: string
+          description: MIME type of the document
+        fileSize:
+          type: number
+          description: Size of the file in bytes
+        uploadTimestamp:
+          type: string
+          format: date-time
+          description: Time when the document was uploaded
+        processingStatus:
+          type: string
+          description: Current processing status of the document
+          enum: [uploaded, processing, processed, failed]
+
+    DocumentInfo:
+      type: object
+      properties:
+        documentId:
+          type: string
+          description: Unique identifier for the uploaded document
+        fileName:
+          type: string
+          description: Original name of the uploaded file
+        fileType:
+          type: string
+          description: MIME type of the document
+        fileSize:
+          type: number
+          description: Size of the file in bytes
+        uploadTimestamp:
+          type: string
+          format: date-time
+          description: Time when the document was uploaded
+        processingStatus:
+          type: string
+          description: Current processing status of the document
+          enum: [uploaded, processing, processed, failed]
+        userId:
+          type: string
+          description: ID of the user who uploaded the document (if applicable)
+        checksum:
+          type: string
+          description: SHA-256 hash for file integrity validation
+
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.documentparser.com/oauth/authorize
+          tokenUrl: https://api.documentparser.com/oauth/token
+          scopes:
+            read: Read access to documents
+            write: Write access to documents
+
+  parameters:
+    documentId:
+      name: documentId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the document

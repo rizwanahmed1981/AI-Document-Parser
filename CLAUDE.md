@@ -115,6 +115,8 @@ tests/
 ## Active Technologies
 - TypeScript 5.0+ (001-invoice-parse)
 - Temporary file storage with encryption at rest, PostgreSQL for structured data persistence (001-invoice-parse)
+- TypeScript 5.0+ (based on CLAUDE.md) + Express.js for REST API, Multer for file uploads, Passport.js for OAuth 2.0 authentication, PostgreSQL for data persistence, temporary file storage with encryption at rest (001-document-upload)
+- PostgreSQL for structured data persistence, temporary file storage for uploaded documents (001-document-upload)
 
 ## Recent Changes
 - 001-invoice-parse: Added TypeScript 5.0+
