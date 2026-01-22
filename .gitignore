@@ -1,0 +1,146 @@
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Builds
+/dist
+/build
+/out
+/output
+/public/dist
+/www/build
+
+# Runtime data
+/logs
+/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.lerna-debug.log*
+
+# Environment variables
+.env*
+!.env.example
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output
+
+# TypeScript
+*.tsbuildinfo
+*.bak
+
+# System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+.directory
+.Trashes
+.AppleDouble
+.LSOverride
+
+# OS generated files
+*~
+*.swp
+*.swo
+*#
+.CVS
+.RCS
+.SCCS
+[Tt]ags
+.DS_Store?
+._*
+
+# IDE specific
+.vscode/*
+.idea/*
+*.iml
+*.ipr
+*.iws
+*.swp
+*.swo
+*~
+.DS_Store
+*.tmp
+
+# Temporary files
+*.tmp
+*.temp
+/tmp
+/temp
+
+# Database
+*.db
+*.db-journal
+
+# Certificates
+*.crt
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS-specific archives
+*.zip
+*.tar*
+*.rar
+*.7z
+
+# Process pid files
+*.pid
+
+# Local configuration
+.local
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Sensitive data
+secrets/
+credentials.json
+*.secret.yaml
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Backend-specific
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/*.log
+backend/.env*
+
+# Frontend-specific
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/*.log
+frontend/.env*
+
+# Temporary file storage for documents
+tmp/
+temp/
+uploads/
+
+# AI/ML models
+models/
+
+# Database files
+*.sqlite
+*.sqlite3
+
+# Docker
+.dockerignore
+Dockerfile*
+
+# Ignore test files in production
+tests/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts

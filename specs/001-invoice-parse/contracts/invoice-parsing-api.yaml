@@ -1,0 +1,261 @@
+openapi: 3.0.3
+info:
+  title: Invoice Parsing API
+  version: 1.0.0
+  description: API for uploading and parsing invoices from PDF documents
+
+servers:
+  - url: https://api.docuparser.com/v1
+    description: Production server
+
+paths:
+  /upload:
+    post:
+      summary: Upload an invoice PDF file
+      description: Uploads a PDF invoice file for parsing
+      tags:
+        - Upload
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                retain:
+                  type: boolean
+                  description: Whether to retain the document after processing
+                  default: false
+      responses:
+        '201':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+        '400':
+          description: Bad request - invalid file or parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Payload too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /parse/{id}:
+    get:
+      summary: Get parsed invoice data
+      description: Retrieve the parsed invoice data by upload ID
+      tags:
+        - Parse
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Upload session ID
+      responses:
+        '200':
+          description: Successfully retrieved parsed data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParsedInvoice'
+        '404':
+          description: Invoice not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /results/{id}:
+    get:
+      summary: Get processing results
+      description: Get the current processing status and results
+      tags:
+        - Results
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Upload session ID
+      responses:
+        '200':
+          description: Successfully retrieved results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResult'
+        '404':
+          description: Results not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    UploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Upload session ID
+        fileName:
+          type: string
+          description: Original file name
+        fileSize:
+          type: number
+          description: File size in bytes
+        status:
+          type: string
+          description: Upload status
+          enum: [pending, processing, completed, failed]
+        createdAt:
+          type: string
+          format: date-time
+          description: When the upload was created
+
+    ParsedInvoice:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Invoice ID
+        userId:
+          type: string
+          description: User who uploaded the invoice
+        fileName:
+          type: string
+          description: Original file name
+        status:
+          type: string
+          description: Processing status
+          enum: [pending, processing, completed, failed]
+        confidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Overall confidence score
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field'
+        errors:
+          type: array
+          items:
+            type: string
+          description: Error messages if any
+
+    Field:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Field ID
+        fieldName:
+          type: string
+          description: Name of the field
+          enum: [vendor, invoiceNumber, date, amount]
+        value:
+          type: string
+          description: Extracted value
+        confidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence score for this field
+        position:
+          type: object
+          properties:
+            x:
+              type: number
+            y:
+              type: number
+          description: Position information if available
+
+    ProcessingResult:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Upload session ID
+        status:
+          type: string
+          description: Processing status
+          enum: [pending, processing, completed, failed]
+        progress:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Processing progress percentage
+        confidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Overall confidence score
+        errors:
+          type: array
+          items:
+            type: string
+          description: Error messages if any
+        createdAt:
+          type: string
+          format: date-time
+          description: When the upload was created
+        processedAt:
+          type: string
+          format: date-time
+          description: When processing was completed
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        details:
+          type: object
+          description: Additional error details
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
