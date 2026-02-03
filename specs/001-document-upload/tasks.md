@@ -48,10 +48,13 @@ Examples of foundational tasks (adjusted based on project):
 
 - [ ] T005 Setup database schema and migrations framework (PostgreSQL)
 - [ ] T006 [P] Implement authentication/authorization framework (Passport.js with OAuth 2.0)
-- [ ] T007 [P] Setup API routing and middleware structure
+- [ ] T007 [P] Setup API routing and middleware structure with security headers (helmet.js)
 - [ ] T008 Create base models/entities that all stories depend on (APIRequest)
-- [ ] T009 Configure error handling and logging infrastructure
+- [ ] T009 Configure error handling and logging infrastructure with security audit trails
 - [ ] T010 Setup environment configuration management (dotenv, config files)
+- [ ] T011 [P] Implement secure file storage with encryption at rest (AES-256)
+- [ ] T012 [P] Configure security middleware (CORS, CSP, XSS protection)
+- [ ] T013 Implement input sanitization and validation framework
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -141,6 +144,11 @@ Examples of foundational tasks (adjusted based on project):
 - [ ] T042 Run quickstart.md validation
 - [ ] T043 [P] Update README with API usage examples
 - [ ] T044 [P] Setup CI/CD pipeline for automated testing
+- [ ] T045 Implement file integrity validation (checksums) for uploaded documents
+- [ ] T046 Add security audit logging for all document operations
+- [ ] T047 Implement proper handling for network interruption during uploads
+- [ ] T048 Add comprehensive error handling for corrupted file uploads
+- [ ] T049 Security vulnerability scanning integration
 
 ---
 ## Dependencies & Execution Order
