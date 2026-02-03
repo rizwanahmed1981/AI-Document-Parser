@@ -41,3 +41,10 @@
 - 400 Bad Request: Generic error code but less specific
 - 422 Unprocessable Entity: For validation errors but not as precise for file types
 - 415 Unsupported Media Type: Most appropriate for file format issues
+
+## Decision: Chunked Upload Support
+**Rationale**: Chunked/resumable uploads were deemed not necessary for the initial implementation, focusing on direct uploads with size limits to simplify the initial release.
+**Alternatives considered**:
+- Chunked uploads: More complex implementation with increased server complexity
+- Resumable uploads: Advanced feature requiring state management
+- Direct uploads: Simpler approach that meets MVP requirements

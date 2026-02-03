@@ -53,10 +53,10 @@ As a developer using the document upload API, I want to receive feedback about t
 
 ### Edge Cases
 
-- What happens when a user attempts to upload a file that exceeds the maximum allowed size?
-- How does the system handle corrupted or malformed document files during upload?
-- What occurs when the server experiences high load during document uploads?
-- How does the system handle interrupted uploads or network failures during transfer?
+- What happens when a user attempts to upload a file that exceeds the maximum allowed size? (Handled with 413 Payload Too Large)
+- How does the system handle corrupted or malformed document files during upload? (Handled with 422 Unprocessable Entity)
+- What occurs when the server experiences high load during document uploads? (Handled with 503 Service Unavailable during overload)
+- How does the system handle interrupted uploads or network failures during transfer? (Handled with 400 Bad Request or retry mechanism)
 
 ## Requirements *(mandatory)*
 
@@ -68,10 +68,11 @@ As a developer using the document upload API, I want to receive feedback about t
 - **FR-004**: System MUST authenticate API requests using OAuth 2.0 for enhanced security and user delegation capabilities
 - **FR-005**: System MUST return a unique document identifier upon successful upload to track the document in the system
 - **FR-006**: System MUST store uploaded documents securely with appropriate access controls
-- **FR-007**: System MUST provide appropriate error responses when uploads fail due to invalid file types, size limits, or authentication issues, including 415 Unsupported Media Type for unsupported file types
+- **FR-007**: System MUST provide appropriate error responses when uploads fail due to invalid file types, size limits, or authentication issues, including 415 Unsupported Media Type for unsupported file types and 422 Unprocessable Entity for corrupted files
 - **FR-008**: System MUST handle large file uploads efficiently, potentially supporting chunked or resumable uploads for files exceeding typical sizes
 - **FR-009**: System MUST validate file integrity to ensure uploaded documents are not corrupted
 - **FR-010**: System MUST implement rate limiting of 10 requests per minute per IP to prevent abuse of the upload endpoint
+- **FR-011**: System MUST maintain 99.9% uptime with 5-minute recovery time for service failures
 
 ### Key Entities *(include if feature involves data)*
 
@@ -88,6 +89,7 @@ As a developer using the document upload API, I want to receive feedback about t
 - **SC-003**: The system can handle at least 100 concurrent document uploads without performance degradation
 - **SC-004**: 99% of valid document uploads complete successfully without corruption or data loss
 - **SC-005**: Users can upload documents in at least 6 different supported file formats (PDF, DOCX, JPEG, PNG, TXT, HTML)
+- **SC-006**: System maintains 99.9% uptime with 5-minute recovery time for service failures
 
 ## Clarifications
 
@@ -97,3 +99,5 @@ As a developer using the document upload API, I want to receive feedback about t
 - Q: Error Handling for Invalid File Types → A: 415 Unsupported Media Type - Standard HTTP status code for unsupported file types
 - Q: Rate Limiting Strategy → A: 10 requests per minute per IP - Very restrictive
 - Q: Chunked Upload Support → A: No - For initial implementation, focus on direct uploads with size limits
+- Q: Reliability & Availability Targets → A: 99.9% uptime with 5-minute recovery time - High availability
+- Q: Corrupted File Handling → A: 422 Unprocessable Entity - For validation failures that don't fit standard error codes

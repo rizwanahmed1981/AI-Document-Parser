@@ -17,7 +17,7 @@ I have successfully implemented the core functionality for User Story 1 - Parse 
 - Created storage service for temporary file handling
 - Implemented encryption utilities for secure data handling
 - Created authentication middleware
-- Created upload service
+- Created upload servicej
 - Created parsing service
 - Implemented AI parsing service with confidence scoring
 - Created error handling utilities
