@@ -32,10 +32,10 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [x] T001 Create project structure per implementation plan
-- [x] T002 Initialize TypeScript project with Express.js dependencies
-- [x] T003 [P] Configure linting and formatting tools (ESLint, Prettier)
-- [x] T004 [P] Setup testing framework (Jest, Supertest)
+- [ ] T001 Create project structure per implementation plan
+- [ ] T002 Initialize TypeScript project with Express.js dependencies
+- [ ] T003 [P] Configure linting and formatting tools (ESLint, Prettier)
+- [ ] T004 [P] Setup testing framework (Jest, Supertest)
 
 ---
 ## Phase 2: Foundational (Blocking Prerequisites)
@@ -46,12 +46,12 @@
 
 Examples of foundational tasks (adjusted based on project):
 
-- [x] T005 Setup database schema and migrations framework (PostgreSQL)
-- [x] T006 [P] Implement authentication/authorization framework (Passport.js with OAuth 2.0)
-- [x] T007 [P] Setup API routing and middleware structure
-- [x] T008 Create base models/entities that all stories depend on (APIRequest)
-- [x] T009 Configure error handling and logging infrastructure
-- [x] T010 Setup environment configuration management (dotenv, config files)
+- [ ] T005 Setup database schema and migrations framework (PostgreSQL)
+- [ ] T006 [P] Implement authentication/authorization framework (Passport.js with OAuth 2.0)
+- [ ] T007 [P] Setup API routing and middleware structure
+- [ ] T008 Create base models/entities that all stories depend on (APIRequest)
+- [ ] T009 Configure error handling and logging infrastructure
+- [ ] T010 Setup environment configuration management (dotenv, config files)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -71,16 +71,16 @@ Examples of foundational tasks (adjusted based on project):
 
 ### Implementation for User Story 1
 
-- [x] T013 [P] [US1] Create Document model in src/models/document.ts
-- [x] T014 [P] [US1] Create UploadSession model in src/models/upload_session.ts
-- [x] T015 [US1] Implement Document Service in src/services/document_service.ts (depends on T013, T014)
-- [x] T016 [US1] Implement authentication middleware in src/middleware/auth.ts
-- [x] T017 [US1] Implement file validation middleware in src/middleware/file_validation.ts
-- [x] T018 [US1] Implement rate limiting middleware in src/middleware/rate_limiting.ts
-- [x] T019 [US1] Implement document upload endpoint in src/ingestion/api/upload_controller.ts
-- [x] T020 [US1] Add validation and error handling for file types and sizes
-- [x] T021 [US1] Add logging for user story 1 operations
-- [x] T022 [US1] Add OAuth 2.0 authentication integration
+- [ ] T013 [P] [US1] Create Document model in src/models/document.ts
+- [ ] T014 [P] [US1] Create UploadSession model in src/models/upload_session.ts
+- [ ] T015 [US1] Implement Document Service in src/services/document_service.ts (depends on T013, T014)
+- [ ] T016 [US1] Implement authentication middleware in src/middleware/auth.ts
+- [ ] T017 [US1] Implement file validation middleware in src/middleware/file_validation.ts
+- [ ] T018 [US1] Implement rate limiting middleware in src/middleware/rate_limiting.ts
+- [ ] T019 [US1] Implement document upload endpoint in src/ingestion/api/upload_controller.ts
+- [ ] T020 [US1] Add validation and error handling for file types and sizes
+- [ ] T021 [US1] Add logging for user story 1 operations
+- [ ] T022 [US1] Add OAuth 2.0 authentication integration
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
