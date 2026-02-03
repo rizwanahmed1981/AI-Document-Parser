@@ -2,12 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { DocumentService } from '../../services/document_service';
 import { DocumentModel } from '../../models/document';
 import { UploadSessionModel } from '../../models/upload_session';
-import { APIRequestModel } from '../../models/api_request';
 import { upload, validateFile, validateFileIntegrity, documentUploadRateLimit } from '../middleware/file_validation';
 import { authenticate, oauth2Authenticate, jwtAuthenticate } from '../middleware/auth';
 
-// Initialize service
+// Initialize services
 const documentService = new DocumentService();
+const documentModel = new DocumentModel();
+const uploadSessionModel = new UploadSessionModel();
 
 // Upload controller
 export const uploadDocument = [
@@ -38,7 +39,7 @@ export const uploadDocument = [
       }
 
       // Get file information
-      const { originalname, mimetype, size, path } = req.file;
+      const { originalname, mimetype, size, path: filePath } = req.file;
 
       // Get user information from authentication
       const userId = (req as any).user?.id;
@@ -49,19 +50,18 @@ export const uploadDocument = [
         mimetype,
         size,
         userId,
-        path
+        filePath
       );
 
       // Create upload session
       const uploadSession = await documentService.createUploadSession(
         originalname,
-        path,
+        filePath,
         size,
         userId
       );
 
       // Log the API request
-      const apiRequest = (req as any).apiRequest;
       console.log(`Document uploaded: ${document.documentId} by user: ${userId}`);
 
       // Return success response
@@ -91,9 +91,6 @@ export const getDocumentStatus = async (req: Request, res: Response, next: NextF
   try {
     const { documentId } = req.params;
 
-    // In a real implementation, you would fetch document from database
-    // For now, we'll simulate with a mock response
-
     // Validate document ID
     if (!documentId) {
       return res.status(400).json({
@@ -102,17 +99,27 @@ export const getDocumentStatus = async (req: Request, res: Response, next: NextF
       });
     }
 
-    // Mock response - in real app, you'd fetch from DB
-    const mockDocument = {
-      documentId,
-      fileName: 'sample.pdf',
-      fileType: 'application/pdf',
-      fileSize: 1024000,
-      uploadTimestamp: new Date(),
-      processingStatus: 'uploaded'
-    };
+    // Get document from database
+    const document = await documentModel.getById(documentId);
 
-    return res.status(200).json(mockDocument);
+    if (!document) {
+      return res.status(404).json({
+        error: 'Not Found',
+        message: 'Document not found'
+      });
+    }
+
+    // Return document status
+    return res.status(200).json({
+      documentId: document.documentId,
+      fileName: document.fileName,
+      fileType: document.fileType,
+      fileSize: document.fileSize,
+      uploadTimestamp: document.uploadTimestamp,
+      processingStatus: document.processingStatus,
+      userId: document.userId,
+      checksum: document.checksum
+    });
 
   } catch (error) {
     console.error('Error getting document status:', error);
