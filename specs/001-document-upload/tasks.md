@@ -26,7 +26,6 @@
 
   DO NOT keep sample tasks from the template in the generated tasks.md file.
   ============================================================================
--->
 
 ## Phase 1: Setup (Shared Infrastructure)
 
@@ -38,13 +37,12 @@
 - [ ] T004 [P] Setup testing framework (Jest, Supertest)
 
 ---
+
 ## Phase 2: Foundational (Blocking Prerequisites)
 
 **Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjusted based on project):
 
 - [ ] T005 Setup database schema and migrations framework (PostgreSQL)
 - [ ] T006 [P] Implement authentication/authorization framework (Passport.js with OAuth 2.0)
@@ -59,6 +57,7 @@ Examples of foundational tasks (adjusted based on project):
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
 ---
+
 ## Phase 3: User Story 1 - Upload Document via API (Priority: P1) 🎯 MVP
 
 **Goal**: Implement core document upload functionality with OAuth 2.0 authentication and basic validation
@@ -69,25 +68,27 @@ Examples of foundational tasks (adjusted based on project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T011 [P] [US1] Contract test for /documents POST endpoint in tests/contract/test_document_upload.py
-- [ ] T012 [P] [US1] Integration test for document upload with valid file in tests/integration/test_document_upload.py
+- [ ] T014 [P] [US1] Contract test for /documents POST endpoint in tests/contract/test_document_upload.py
+- [ ] T015 [P] [US1] Integration test for document upload with valid file in tests/integration/test_document_upload.py
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create Document model in src/models/document.ts
-- [ ] T014 [P] [US1] Create UploadSession model in src/models/upload_session.ts
-- [ ] T015 [US1] Implement Document Service in src/services/document_service.ts (depends on T013, T014)
-- [ ] T016 [US1] Implement authentication middleware in src/middleware/auth.ts
-- [ ] T017 [US1] Implement file validation middleware in src/middleware/file_validation.ts
-- [ ] T018 [US1] Implement rate limiting middleware in src/middleware/rate_limiting.ts
-- [ ] T019 [US1] Implement document upload endpoint in src/ingestion/api/upload_controller.ts
-- [ ] T020 [US1] Add validation and error handling for file types and sizes
-- [ ] T021 [US1] Add logging for user story 1 operations
-- [ ] T022 [US1] Add OAuth 2.0 authentication integration
+- [ ] T016 [P] [US1] Create Document model in src/models/document.ts
+- [ ] T017 [P] [US1] Create UploadSession model in src/models/upload_session.ts
+- [ ] T018 [US1] Implement Document Service in src/services/document_service.ts (depends on T016, T017)
+- [ ] T019 [US1] Implement authentication middleware in src/middleware/auth.ts
+- [ ] T020 [US1] Implement file validation middleware in src/middleware/file_validation.ts
+- [ ] T021 [US1] Implement rate limiting middleware in src/middleware/rate_limiting.ts
+- [ ] T022 [US1] Implement document upload endpoint in src/ingestion/api/upload_controller.ts
+- [ ] T023 [US1] Add validation and error handling for file types and sizes
+- [ ] T024 [US1] Add logging for user story 1 operations
+- [ ] T025 [US1] Add OAuth 2.0 authentication integration
+- [ ] T026 [US1] Implement secure file storage and encryption
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
 ---
+
 ## Phase 4: User Story 2 - Upload Multiple Document Types (Priority: P2)
 
 **Goal**: Enable upload of multiple document types with proper validation and error handling
@@ -96,21 +97,22 @@ Examples of foundational tasks (adjusted based on project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T023 [P] [US2] Contract test for /documents POST endpoint with various file types in tests/contract/test_document_upload_types.py
-- [ ] T024 [P] [US2] Integration test for document upload with different file types in tests/integration/test_document_upload_types.py
+- [ ] T027 [P] [US2] Contract test for /documents POST endpoint with various file types in tests/contract/test_document_upload_types.py
+- [ ] T028 [P] [US2] Integration test for document upload with different file types in tests/integration/test_document_upload_types.py
 
 ### Implementation for User Story 2
 
-- [ ] T025 [P] [US2] Create Document model enhancements in src/models/document.ts (add validation rules)
-- [ ] T026 [US2] Implement comprehensive file type validation in src/services/file_validator.ts
-- [ ] T027 [US2] Implement file type extension and MIME type checking in src/utils/file_utils.ts
-- [ ] T028 [US2] Implement error responses for invalid file types in src/ingestion/api/upload_controller.ts
-- [ ] T029 [US2] Add support for additional document types (DOCX, JPEG, PNG, TXT, HTML) in src/ingestion/api/upload_controller.ts
-- [ ] T030 [US2] Integrate file validation with existing upload controller
+- [ ] T029 [P] [US2] Create Document model enhancements in src/models/document.ts (add validation rules)
+- [ ] T030 [US2] Implement comprehensive file type validation in src/services/file_validator.ts
+- [ ] T031 [US2] Implement file type extension and MIME type checking in src/utils/file_utils.ts
+- [ ] T032 [US2] Implement error responses for invalid file types in src/ingestion/api/upload_controller.ts
+- [ ] T033 [US2] Add support for additional document types (DOCX, JPEG, PNG, TXT, HTML) in src/ingestion/api/upload_controller.ts
+- [ ] T034 [US2] Integrate file validation with existing upload controller
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
 ---
+
 ## Phase 5: User Story 3 - Monitor Upload Progress (Priority: P3)
 
 **Goal**: Allow users to retrieve document information and status after upload
@@ -119,38 +121,40 @@ Examples of foundational tasks (adjusted based on project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T031 [P] [US3] Contract test for /documents/{documentId} GET endpoint in tests/contract/test_document_status.py
-- [ ] T032 [P] [US3] Integration test for document status retrieval in tests/integration/test_document_status.py
+- [ ] T035 [P] [US3] Contract test for /documents/{documentId} GET endpoint in tests/contract/test_document_status.py
+- [ ] T036 [P] [US3] Integration test for document status retrieval in tests/integration/test_document_status.py
 
 ### Implementation for User Story 3
 
-- [ ] T033 [P] [US3] Create document status retrieval service in src/services/document_status_service.ts
-- [ ] T034 [US3] Implement document status endpoint in src/ingestion/api/status_controller.ts
-- [ ] T035 [US3] Add document status validation in src/models/document.ts
-- [ ] T036 [US3] Implement document status update logic in src/services/document_service.ts
-- [ ] T037 [US3] Add error handling for document not found in src/ingestion/api/status_controller.ts
+- [ ] T037 [P] [US3] Create document status retrieval service in src/services/document_status_service.ts
+- [ ] T038 [US3] Implement document status endpoint in src/ingestion/api/status_controller.ts
+- [ ] T039 [US3] Add document status validation in src/models/document.ts
+- [ ] T040 [US3] Implement document status update logic in src/services/document_service.ts
+- [ ] T041 [US3] Add error handling for document not found in src/ingestion/api/status_controller.ts
 
 **Checkpoint**: All user stories should now be independently functional
 
 ---
+
 ## Phase 6: Polish & Cross-Cutting Concerns
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T038 [P] Documentation updates in docs/
-- [ ] T039 Code cleanup and refactoring
-- [ ] T040 [P] Additional unit tests in tests/unit/
-- [ ] T041 Security hardening
-- [ ] T042 Run quickstart.md validation
-- [ ] T043 [P] Update README with API usage examples
-- [ ] T044 [P] Setup CI/CD pipeline for automated testing
-- [ ] T045 Implement file integrity validation (checksums) for uploaded documents
-- [ ] T046 Add security audit logging for all document operations
-- [ ] T047 Implement proper handling for network interruption during uploads
-- [ ] T048 Add comprehensive error handling for corrupted file uploads
-- [ ] T049 Security vulnerability scanning integration
+- [ ] T042 [P] Documentation updates in docs/
+- [ ] T043 Code cleanup and refactoring
+- [ ] T044 [P] Additional unit tests in tests/unit/
+- [ ] T045 Security hardening
+- [ ] T046 Run quickstart.md validation
+- [ ] T047 [P] Update README with API usage examples
+- [ ] T048 [P] Setup CI/CD pipeline for automated testing
+- [ ] T049 Implement file integrity validation (checksums) for uploaded documents
+- [ ] T050 Add security audit logging for all document operations
+- [ ] T051 Implement proper handling for network interruption during uploads
+- [ ] T052 Add comprehensive error handling for corrupted file uploads
+- [ ] T053 Security vulnerability scanning integration
 
 ---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -186,6 +190,7 @@ Examples of foundational tasks (adjusted based on project):
 - Different user stories can be worked on in parallel by different team members
 
 ---
+
 ## Parallel Example: User Story 1
 
 ```bash
@@ -199,6 +204,7 @@ Task: "Create UploadSession model in src/models/upload_session.ts"
 ```
 
 ---
+
 ## Implementation Strategy
 
 ### MVP First (User Story 1 Only)
@@ -229,6 +235,7 @@ With multiple developers:
 3. Stories complete and integrate independently
 
 ---
+
 ## Notes
 
 - [P] tasks = different files, no dependencies
